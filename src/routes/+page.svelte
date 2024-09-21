@@ -65,9 +65,9 @@
         const result = Math.random();
 
         if (result > threshold) {
-            console.log("You won!");
+            $score += 1;
         } else {
-            console.log("You lost!");
+            // $score -= 1;
         }
 
         subRound++;
@@ -76,6 +76,10 @@
             subRound = 0;
         }
         checkRound();
+    };
+
+    const submitResults = async () => {
+        console.log("Submitting results...");
     };
 
     $: console.log($surveyResults);
@@ -89,7 +93,7 @@
             <div class="text-5xl text-center">
                 <h2>Select a slot machine</h2>
             </div>
-            <div class="h-1/2 w-full flex px-16 py-8 p-16 gap-8">
+            <div class="h-1/2 w-full flex px-16 pb-12 pt-8 p-16 gap-8">
                 {#if round === 1}
                     <ColorButton
                         on:click={() => playSlotMachine("purple")}
@@ -111,6 +115,11 @@
                 {:else}
                     Hi
                 {/if}
+            </div>
+            <div class="text-3xl text-center">
+                <h3>
+                    {10 - subRound} rolls remaining
+                </h3>
             </div>
         {/if}
 
@@ -175,5 +184,4 @@
             </div>
         {/if}
     </main>
-    <footer class="w-full h-16 bg-base-300"></footer>
 </div>
