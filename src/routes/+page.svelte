@@ -2,13 +2,15 @@
     import ColorButton from "$lib/components/ColorButton.svelte";
 
     import Top from "$lib/components/Top.svelte";
-    import { score, surveyResults } from "$lib/state";
+    import { answerLog, score, surveyResults } from "$lib/state";
 
     const group = Math.random() > 0.5 ? "A" : "B";
 
     let round = 0;
     let subRound = 0;
     let state = "survey";
+
+    const NUM_ROUNDS = 20;
 
     const COLOR_THRESH_MAP: Record<string, number> = {
         purple: 0.7,
@@ -63,7 +65,7 @@
         checkRound();
     };
 
-    const playSlotMachine = (color: string) => {
+    const playSlotMachine = (color: string, double: boolean = false) => {
         if (!COLOR_THRESH_MAP[color]) {
             throw new Error(`Invalid color: ${color}`);
         }
@@ -71,14 +73,16 @@
         const threshold = COLOR_THRESH_MAP[color];
         const result = Math.random();
 
+        if (!$answerLog[round]) $answerLog[round] = [];
+        $answerLog[round].push(color);
+
         if (result > threshold) {
-            $score += 1;
-        } else {
-            // $score -= 1;
+            if (double) $score += 2;
+            else $score += 1;
         }
 
         subRound++;
-        if (subRound === 10) {
+        if (subRound === 20) {
             round++;
             subRound = 0;
         }
@@ -122,13 +126,29 @@
                         on:click={() => playSlotMachine("yellow")}
                         color="yellow"
                         emoji="🐤" />
+                {:else if subRound < Math.floor(NUM_ROUNDS / 2)}
+                    <ColorButton
+                        on:click={() => playSlotMachine("blue", true)}
+                        color="blue"
+                        emoji="🦈" />
+                    <ColorButton
+                        on:click={() => playSlotMachine("green", true)}
+                        color="green"
+                        emoji="🦆" />
                 {:else}
-                    Hi
+                    <ColorButton
+                        on:click={() => playSlotMachine("yellow", true)}
+                        color="yellow"
+                        emoji="🐤" />
+                    <ColorButton
+                        on:click={() => playSlotMachine("purple", true)}
+                        color="purple"
+                        emoji="🦄" />
                 {/if}
             </div>
             <div class="text-3xl text-center">
                 <h3>
-                    {10 - subRound} rolls remaining
+                    {NUM_ROUNDS - subRound} rolls remaining
                 </h3>
             </div>
         {/if}
@@ -183,7 +203,7 @@
                 </div>
             {:else}
                 <div class="text-3xl text-center">
-                    <h2>😿 Oh no! You lost your wallet and lost $7!</h2>
+                    <h2>Oh no! You lost your wallet and lost $7!</h2>
                 </div>
             {/if}
 
