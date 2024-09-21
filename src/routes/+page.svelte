@@ -33,9 +33,9 @@
             case 3:
                 state = "wheel";
                 if (group === "A") {
-                    $score += 7;
+                    $score += 14;
                 } else {
-                    $score -= 7;
+                    $score -= 14;
                 }
                 break;
             case 4:
@@ -199,11 +199,11 @@
         {#if state === "wheel"}
             {#if group === "A"}
                 <div class="text-3xl text-center">
-                    <h2>🎉 Congratulations! You win a surprise gift of $7!</h2>
+                    <h2>🎉 Congratulations! You win a surprise gift of $14!</h2>
                 </div>
             {:else}
                 <div class="text-3xl text-center">
-                    <h2>Oh no! You lost your wallet and lost $7!</h2>
+                    <h2>Oh no! You lost your wallet and lost $14!</h2>
                 </div>
             {/if}
 
