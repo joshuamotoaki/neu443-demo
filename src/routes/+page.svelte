@@ -6,20 +6,36 @@
     import Top from "$lib/components/Top.svelte";
 
     let round = 0;
+    let state = "survey";
 </script>
 
 <div class="h-screen flex flex-col">
     <Top />
     <main class="flex-1">
-        <div class="text-5xl text-center">
-            <h2>Select a button</h2>
-        </div>
-        <div class="h-1/2 w-full flex gap-16 p-16">
-            <BlueButton />
-            <OrangeButton />
-            <PurpleButton />
-            <GreenButton />
-        </div>
+        {#if state === "game"}
+            <div class="text-5xl text-center">
+                <h2>Select a button</h2>
+            </div>
+            <div class="h-1/2 w-full flex px-16 py-8 p-16">
+                <BlueButton />
+                <OrangeButton />
+                <PurpleButton />
+                <GreenButton />
+            </div>
+        {/if}
+
+        {#if state === "survey"}
+            <div class="text-5xl text-center">
+                <h2>How do you feel?</h2>
+            </div>
+            <div class="h-1/3 w-full flex px-16 py-8 gap-4">
+                <button class="b neutral"> 😞 </button>
+                <button class="b neutral"> 🙁 </button>
+                <button class="b neutral"> 😐 </button>
+                <button class="b neutral"> 🙂 </button>
+                <button class="b neutral"> 😀 </button>
+            </div>
+        {/if}
     </main>
     <footer class="w-full h-16 bg-base-300"></footer>
 </div>
