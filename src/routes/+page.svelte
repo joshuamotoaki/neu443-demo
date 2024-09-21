@@ -4,15 +4,17 @@
     import Top from "$lib/components/Top.svelte";
     import { score, surveyResults } from "$lib/state";
 
+    const group = Math.random() > 0.5 ? "A" : "B";
+
     let round = 0;
     let subRound = 0;
     let state = "survey";
 
     const COLOR_THRESH_MAP: Record<string, number> = {
-        purple: 0.5,
-        green: 0.5,
-        blue: 0.5,
-        yellow: 0.5
+        purple: 0.7,
+        green: 0.3,
+        blue: 0.3,
+        yellow: 0.7
     };
 
     const checkRound = () => {
@@ -28,6 +30,11 @@
                 break;
             case 3:
                 state = "wheel";
+                if (group === "A") {
+                    $score += 7;
+                } else {
+                    $score -= 7;
+                }
                 break;
             case 4:
                 state = "survey";
@@ -91,7 +98,10 @@
     <main class="flex-1">
         {#if state === "game"}
             <div class="text-5xl text-center">
-                <h2>Select a slot machine</h2>
+                <h2>Select an animal</h2>
+                {#if round > 5}
+                    <h3 class="text-2xl">Rewards are now doubled!</h3>
+                {/if}
             </div>
             <div class="h-1/2 w-full flex px-16 pb-12 pt-8 p-16 gap-8">
                 {#if round === 1}
@@ -167,20 +177,34 @@
         {/if}
 
         {#if state === "wheel"}
-            Wheel
-            <button
-                on:click={() => {
-                    round++;
-                    checkRound();
-                }}
-                class="b neutral">
-                Spin
-            </button>
+            {#if group === "A"}
+                <div class="text-3xl text-center">
+                    <h2>🎉 Congratulations! You win a surprise gift of $7!</h2>
+                </div>
+            {:else}
+                <div class="text-3xl text-center">
+                    <h2>😿 Oh no! You lost your wallet and lost $7!</h2>
+                </div>
+            {/if}
+
+            <div class="text-3xl text-center mt-8">
+                <button
+                    on:click={() => {
+                        round++;
+                        checkRound();
+                    }}
+                    class="btn btn-primary btn-lg">
+                    Proceed
+                </button>
+            </div>
         {/if}
 
         {#if state === "done"}
             <div class="text-5xl text-center">
                 <h2>Thank you for playing!</h2>
+            </div>
+            <div class="text-3xl text-center mt-4">
+                You won ${$score}!
             </div>
         {/if}
     </main>
