@@ -4,9 +4,9 @@
     import Top from "$lib/components/Top.svelte";
     import { score, surveyResults } from "$lib/state";
 
-    let round = 1;
+    let round = 0;
     let subRound = 0;
-    let state = "game";
+    let state = "survey";
 
     const COLOR_THRESH_MAP: Record<string, number> = {
         purple: 0.5,
