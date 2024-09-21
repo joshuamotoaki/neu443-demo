@@ -4,8 +4,10 @@
     import OrangeButton from "$lib/components/buttons/OrangeButton.svelte";
     import PurpleButton from "$lib/components/buttons/PurpleButton.svelte";
     import Top from "$lib/components/Top.svelte";
+    import { surveyResults } from "$lib/state";
 
     let round = 0;
+    let subRound = 0;
     let state = "survey";
 </script>
 
@@ -29,11 +31,41 @@
                 <h2>How do you feel?</h2>
             </div>
             <div class="h-1/3 w-full flex px-16 py-8 gap-4">
-                <button class="b neutral"> 😞 </button>
-                <button class="b neutral"> 🙁 </button>
-                <button class="b neutral"> 😐 </button>
-                <button class="b neutral"> 🙂 </button>
-                <button class="b neutral"> 😀 </button>
+                <button
+                    on:click={() => {
+                        $surveyResults.push(1);
+                    }}
+                    class="b neutral">
+                    😞
+                </button>
+                <button
+                    on:click={() => {
+                        $surveyResults.push(2);
+                    }}
+                    class="b neutral">
+                    🙁
+                </button>
+                <button
+                    on:click={() => {
+                        $surveyResults.push(3);
+                    }}
+                    class="b neutral">
+                    😐
+                </button>
+                <button
+                    on:click={() => {
+                        $surveyResults.push(4);
+                    }}
+                    class="b neutral">
+                    🙂
+                </button>
+                <button
+                    on:click={() => {
+                        $surveyResults.push(5);
+                    }}
+                    class="b neutral">
+                    😀
+                </button>
             </div>
         {/if}
     </main>
