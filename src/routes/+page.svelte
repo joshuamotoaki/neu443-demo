@@ -4,11 +4,14 @@
     import OrangeButton from "$lib/components/buttons/OrangeButton.svelte";
     import PurpleButton from "$lib/components/buttons/PurpleButton.svelte";
     import Top from "$lib/components/Top.svelte";
-    import { surveyResults } from "$lib/state";
+    import { score, surveyResults } from "$lib/state";
 
     let round = 0;
     let subRound = 0;
     let state = "survey";
+
+    $: console.log($surveyResults);
+    $: console.log($score);
 </script>
 
 <div class="h-screen flex flex-col">
@@ -34,6 +37,7 @@
                 <button
                     on:click={() => {
                         $surveyResults.push(1);
+                        $surveyResults = $surveyResults;
                     }}
                     class="b neutral">
                     😞
@@ -41,6 +45,7 @@
                 <button
                     on:click={() => {
                         $surveyResults.push(2);
+                        $surveyResults = $surveyResults;
                     }}
                     class="b neutral">
                     🙁
@@ -48,6 +53,7 @@
                 <button
                     on:click={() => {
                         $surveyResults.push(3);
+                        $surveyResults = $surveyResults;
                     }}
                     class="b neutral">
                     😐
@@ -55,6 +61,7 @@
                 <button
                     on:click={() => {
                         $surveyResults.push(4);
+                        $surveyResults = $surveyResults;
                     }}
                     class="b neutral">
                     🙂
@@ -62,6 +69,7 @@
                 <button
                     on:click={() => {
                         $surveyResults.push(5);
+                        $surveyResults = $surveyResults;
                     }}
                     class="b neutral">
                     😀
