@@ -1,14 +1,12 @@
 <script>
-    import BlueButton from "$lib/components/buttons/BlueButton.svelte";
-    import GreenButton from "$lib/components/buttons/GreenButton.svelte";
-    import OrangeButton from "$lib/components/buttons/OrangeButton.svelte";
-    import PurpleButton from "$lib/components/buttons/PurpleButton.svelte";
+    import ColorButton from "$lib/components/ColorButton.svelte";
+
     import Top from "$lib/components/Top.svelte";
     import { score, surveyResults } from "$lib/state";
 
-    let round = 0;
+    let round = 1;
     let subRound = 0;
-    let state = "survey";
+    let state = "game";
 
     $: console.log($surveyResults);
     $: console.log($score);
@@ -21,11 +19,19 @@
             <div class="text-5xl text-center">
                 <h2>Select a button</h2>
             </div>
-            <div class="h-1/2 w-full flex px-16 py-8 p-16">
-                <BlueButton />
-                <OrangeButton />
-                <PurpleButton />
-                <GreenButton />
+            <div class="h-1/2 w-full flex px-16 py-8 p-16 gap-8">
+                {#if round === 1}
+                    <ColorButton color="purple" emoji="🦄" />
+                    <ColorButton color="green" emoji="🦆" />
+                {:else if round === 2}
+                    <ColorButton color="blue" emoji="🦈" />
+                    <ColorButton color="orange" emoji="🦊" />
+                {:else if round === 3}
+                    <ColorButton color="red" emoji="🦀" />
+                    <ColorButton color="yellow" emoji="🐤" />
+                {:else}
+                    Hi
+                {/if}
             </div>
         {/if}
 
