@@ -16,7 +16,7 @@
     let isCorrect = false;
     let winAmount = 1;
 
-    const NUM_ROUNDS = 16;
+    const NUM_ROUNDS = 10;
 
     const COLOR_THRESH_MAP: Record<string, number> = {
         purple: 0.75,
