@@ -11,6 +11,10 @@
     let subRound = 0;
     let state = "survey";
 
+    let isWrong = false;
+    let isCorrect = false;
+    let winAmount = 1;
+
     const NUM_ROUNDS = 20;
 
     const COLOR_THRESH_MAP: Record<string, number> = {
@@ -49,6 +53,7 @@
                 state = "survey";
                 break;
             case 7:
+                winAmount = 2;
                 state = "game";
                 break;
             case 8:
@@ -67,7 +72,7 @@
         checkRound();
     };
 
-    const playSlotMachine = (color: string, double: boolean = false) => {
+    const playSlotMachine = (color: string) => {
         if (!COLOR_THRESH_MAP[color]) {
             throw new Error(`Invalid color: ${color}`);
         }
@@ -79,8 +84,7 @@
         $answerLog[round].push(color);
 
         if (result > threshold) {
-            if (double) $score += 2;
-            else $score += 1;
+            $score += winAmount;
         }
 
         subRound++;
@@ -107,6 +111,57 @@
 
 <div class="h-screen flex flex-col">
     <Top />
+
+    {#if isCorrect}
+        <div
+            id="correct"
+            class="absolute top-0 left-0 w-screen h-screen bg-green-600">
+            <div
+                class="flex items-center justify-center h-full flex-col gap-4
+                text-white">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-36">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+
+                <h3 class="text-5xl font-semibold">You won ${winAmount}!</h3>
+            </div>
+        </div>
+    {/if}
+
+    {#if isWrong}
+        <div
+            id="correct"
+            class="absolute top-0 left-0 w-screen h-screen bg-red-600">
+            <div
+                class="flex items-center justify-center h-full flex-col gap-4
+            text-white">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-36">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+
+                <h3 class="text-5xl font-semibold">You lost.</h3>
+            </div>
+        </div>
+    {/if}
+
     <main class="flex-1">
         {#if !$isStarted}
             <div class="text-center space-y-4 mx-auto w-11/12">
@@ -157,20 +212,20 @@
                             emoji="🐤" />
                     {:else if subRound < Math.floor(NUM_ROUNDS / 2)}
                         <ColorButton
-                            on:click={() => playSlotMachine("blue", true)}
+                            on:click={() => playSlotMachine("blue")}
                             color="blue"
                             emoji="🦈" />
                         <ColorButton
-                            on:click={() => playSlotMachine("green", true)}
+                            on:click={() => playSlotMachine("green")}
                             color="green"
                             emoji="🦆" />
                     {:else}
                         <ColorButton
-                            on:click={() => playSlotMachine("yellow", true)}
+                            on:click={() => playSlotMachine("yellow")}
                             color="yellow"
                             emoji="🐤" />
                         <ColorButton
-                            on:click={() => playSlotMachine("purple", true)}
+                            on:click={() => playSlotMachine("purple")}
                             color="purple"
                             emoji="🦄" />
                     {/if}
