@@ -197,13 +197,14 @@
             </div>
         {:else}
             {#if state === "game"}
-                <div class="text-5xl text-center">
+                <div class="text-4xl sm:text-5xl text-center w-11/12 mx-auto">
                     <h2>Select a slot machine</h2>
                     {#if round > 5}
                         <h3 class="text-2xl">Rewards are now doubled!</h3>
                     {/if}
                 </div>
-                <div class="h-1/2 w-full flex px-16 pb-12 pt-8 p-16 gap-8">
+                <div
+                    class="h-1/2 w-full flex px-8 sm:px-16 pb-12 pt-8 p-16 gap-4 sm:gap-8">
                     {#if round === 1}
                         <ColorButton
                             on:click={() => playSlotMachine("purple")}
@@ -250,10 +251,11 @@
             {/if}
 
             {#if state === "survey"}
-                <div class="text-5xl text-center">
+                <div class="text-4xl sm:text-5xl text-center w-11/12 mx-auto">
                     <h2>How do you feel?</h2>
                 </div>
-                <div class="h-1/3 w-full flex px-16 py-8 gap-4">
+                <div
+                    class="h-1/3 w-full flex flex-wrap px-8 sm:px-16 py-8 gap-4">
                     <button
                         on:click={() => {
                             recordSurvey(1);
@@ -294,14 +296,14 @@
 
             {#if state === "wheel"}
                 {#if group === "A"}
-                    <div class="text-3xl text-center">
+                    <div class="text-3xl text-center w-11/12 mx-auto">
                         <h2>
                             🎉 Congratulations! You win a surprise gift of $14!
                             🎉
                         </h2>
                     </div>
                 {:else}
-                    <div class="text-3xl text-center">
+                    <div class="text-3xl text-center w-11/12 mx-auto">
                         <h2>😥 Oh no! You lost your wallet and lost $14! 😥</h2>
                     </div>
                 {/if}
@@ -319,15 +321,17 @@
             {/if}
 
             {#if state === "done"}
-                <div class="text-5xl text-center">
-                    <h2>Thank you for playing!</h2>
+                <div class="w-11/12 mx-auto">
+                    <div class="text-5xl text-center">
+                        <h2>Thank you for playing!</h2>
+                    </div>
+                    <div class="text-3xl text-center mt-4">
+                        You won ${$score}!
+                    </div>
+                    <p class="text-lg mt-4 text-center">
+                        Check the board for results.
+                    </p>
                 </div>
-                <div class="text-3xl text-center mt-4">
-                    You won ${$score}!
-                </div>
-                <p class="text-lg mt-4 text-center">
-                    Check the board for results.
-                </p>
             {/if}
         {/if}
     </main>

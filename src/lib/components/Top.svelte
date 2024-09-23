@@ -8,6 +8,8 @@
             <h2 class="text-xl">
                 Balance: ${$score}
             </h2>
+        {:else}
+            <h2 class="text-xl">NEU443 Demo Game</h2>
         {/if}
     </div>
 </div>
