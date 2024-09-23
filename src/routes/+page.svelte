@@ -177,13 +177,13 @@
     <main class="flex-1">
         {#if !$isStarted}
             <div class="text-center space-y-4 mx-auto w-11/12">
-                <h1 class="text-4xl">Welcome to the experiment!</h1>
+                <h1 class="text-4xl">🎰 Welcome to the game!</h1>
 
                 <p class="text-lg">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Eius sapiente cum debitis soluta, numquam doloribus quos a
-                    rerum excepturi itaque vero quas voluptate enim obcaecati
-                    accusantium, maiores quis harum totam.
+                    You will choose between slot machines. Each slot machine has
+                    a fixed probability of winning. You will be periodically
+                    asked to evaluate your mood. Check the board for results.
+                    All data is anonymous.
                 </p>
 
                 <button
