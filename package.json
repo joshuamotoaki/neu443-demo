@@ -28,6 +28,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@fontsource-variable/lexend": "^5.1.0",
 		"@supabase/supabase-js": "^2.45.4"
 	}
 }

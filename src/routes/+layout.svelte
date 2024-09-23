@@ -2,4 +2,6 @@
     import "../app.pcss";
 </script>
 
-<slot />
+<div class="font-lexend">
+    <slot />
+</div>
