@@ -13,10 +13,10 @@
     const NUM_ROUNDS = 20;
 
     const COLOR_THRESH_MAP: Record<string, number> = {
-        purple: 0.7,
+        purple: 0.8,
         green: 0.3,
         blue: 0.3,
-        yellow: 0.7
+        yellow: 0.8
     };
 
     const checkRound = () => {
@@ -123,7 +123,7 @@
         {:else}
             {#if state === "game"}
                 <div class="text-5xl text-center">
-                    <h2>Select an animal</h2>
+                    <h2>Select a slot machine</h2>
                     {#if round > 5}
                         <h3 class="text-2xl">Rewards are now doubled!</h3>
                     {/if}
@@ -249,6 +249,9 @@
                 <div class="text-3xl text-center mt-4">
                     You won ${$score}!
                 </div>
+                <p class="text-lg mt-4 text-center">
+                    Check the board for results.
+                </p>
             {/if}
         {/if}
     </main>
