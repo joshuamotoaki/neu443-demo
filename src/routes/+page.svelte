@@ -19,10 +19,10 @@
     const NUM_ROUNDS = 20;
 
     const COLOR_THRESH_MAP: Record<string, number> = {
-        purple: 0.8,
-        green: 0.3,
-        blue: 0.3,
-        yellow: 0.8
+        purple: 0.75,
+        green: 0.25,
+        blue: 0.25,
+        yellow: 0.75
     };
 
     const checkRound = () => {
@@ -88,13 +88,13 @@
             isCorrect = true;
             setTimeout(() => {
                 isCorrect = false;
-            }, 2000);
+            }, 1000);
             $score += winAmount;
         } else {
             isWrong = true;
             setTimeout(() => {
                 isWrong = false;
-            }, 2000);
+            }, 1000);
         }
 
         subRound++;
