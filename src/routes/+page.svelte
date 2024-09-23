@@ -4,6 +4,7 @@
     import Top from "$lib/components/Top.svelte";
     import { answerLog, isStarted, score, surveyResults } from "$lib/state";
     import { supabase } from "$lib/supabase";
+    import { fade } from "svelte/transition";
 
     const group = Math.random() > 0.5 ? "A" : "B";
 
@@ -83,8 +84,17 @@
         if (!$answerLog[round]) $answerLog[round] = [];
         $answerLog[round].push(color);
 
-        if (result > threshold) {
+        if (result >= threshold) {
+            isCorrect = true;
+            setTimeout(() => {
+                isCorrect = false;
+            }, 2000);
             $score += winAmount;
+        } else {
+            isWrong = true;
+            setTimeout(() => {
+                isWrong = false;
+            }, 2000);
         }
 
         subRound++;
@@ -114,6 +124,7 @@
 
     {#if isCorrect}
         <div
+            out:fade={{ duration: 100 }}
             id="correct"
             class="absolute top-0 left-0 w-screen h-screen bg-green-600">
             <div
@@ -139,6 +150,7 @@
 
     {#if isWrong}
         <div
+            out:fade={{ duration: 100 }}
             id="correct"
             class="absolute top-0 left-0 w-screen h-screen bg-red-600">
             <div
