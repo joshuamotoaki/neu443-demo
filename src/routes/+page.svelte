@@ -16,7 +16,7 @@
     let isCorrect = false;
     let winAmount = 1;
 
-    const NUM_ROUNDS = 20;
+    const NUM_ROUNDS = 16;
 
     const COLOR_THRESH_MAP: Record<string, number> = {
         purple: 0.75,
@@ -98,7 +98,7 @@
         }
 
         subRound++;
-        if (subRound === 20) {
+        if (subRound === NUM_ROUNDS) {
             round++;
             subRound = 0;
         }
@@ -297,11 +297,12 @@
                     <div class="text-3xl text-center">
                         <h2>
                             🎉 Congratulations! You win a surprise gift of $14!
+                            🎉
                         </h2>
                     </div>
                 {:else}
                     <div class="text-3xl text-center">
-                        <h2>Oh no! You lost your wallet and lost $14!</h2>
+                        <h2>😥 Oh no! You lost your wallet and lost $14! 😥</h2>
                     </div>
                 {/if}
 
