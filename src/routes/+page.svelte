@@ -3,6 +3,7 @@
 
     import Top from "$lib/components/Top.svelte";
     import { answerLog, isStarted, score, surveyResults } from "$lib/state";
+    import { supabase } from "$lib/supabase";
 
     const group = Math.random() > 0.5 ? "A" : "B";
 
@@ -54,6 +55,7 @@
                 state = "survey";
                 break;
             default:
+                submitResults();
                 state = "done";
         }
     };
@@ -90,11 +92,17 @@
     };
 
     const submitResults = async () => {
-        console.log("Submitting results...");
-    };
+        const toSubmit = {
+            data: {
+                group: group,
+                answers: $answerLog,
+                survey: $surveyResults,
+                score: $score
+            }
+        };
 
-    $: console.log($surveyResults);
-    $: console.log($score);
+        await supabase.from("data").insert(toSubmit);
+    };
 </script>
 
 <div class="h-screen flex flex-col">
