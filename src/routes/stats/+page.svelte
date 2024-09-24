@@ -32,8 +32,8 @@
         score: number;
     };
 
-    // let appData: DataEntry[] = [];
-    let appData: DataEntry[] = SAMPLE_DATA as DataEntry[];
+    let appData: DataEntry[] = [];
+    // let appData: DataEntry[] = SAMPLE_DATA as DataEntry[];
 
     supabase
         .channel("data")
@@ -119,7 +119,8 @@
             },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    max: 5
                 }
             }
         }
@@ -151,7 +152,8 @@
             },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    max: 1
                 }
             }
         }
@@ -171,11 +173,13 @@
         aGroupSurveyAvg = calcAvgArr("A");
         bGroupSurveyAvg = calcAvgArr("B");
 
-        aGroupBeforePercent = calcPercentBefore("A");
-        bGroupBeforePercent = calcPercentBefore("B");
+        aGroupBeforePercent = calcPercentBefore("A") || 0;
+        bGroupBeforePercent = calcPercentBefore("B") || 0;
 
         surveyAvgData.datasets[0].data = aGroupSurveyAvg;
         surveyAvgData.datasets[1].data = bGroupSurveyAvg;
+
+        console.log(aGroupBeforePercent, bGroupBeforePercent);
 
         beforePrecentData.datasets[0].data = [
             aGroupBeforePercent,
@@ -194,20 +198,16 @@
     };
 
     onMount(async () => {
-        // const { data, error } = await supabase.from("data").select("*");
+        const { data, error } = await supabase.from("data").select("*");
 
-        // if (error) {
-        //     console.error(error);
-        // } else {
-        //     appData.push(...data.map(x => x.data));
-        // }
-        // appData = appData;
+        if (error) {
+            console.error(error);
+        } else {
+            appData.push(...data.map(x => x.data));
+        }
+        appData = appData;
 
-        ctx1 = surveyAvgChart.getContext("2d");
-        chart1 = new Chart(ctx1, surveyAvgConfig);
-
-        ctx2 = beforePercentChart.getContext("2d");
-        chart2 = new Chart(ctx2, beforePercentConfig);
+        refreshCharts();
     });
 </script>
 
@@ -222,25 +222,6 @@
                 </li>
             {/each}
         </ul>
-        <button
-            class="bg-blue-500 text-white p-2 rounded-md mt-2"
-            on:click={() => {
-                appData.push({
-                    group: "B",
-                    answers: {
-                        "1": ["purple", "green", "green", "green"],
-                        "5": ["blue", "yellow", "blue", "yellow"],
-                        "7": ["purple", "green", "blue", "yellow"]
-                    },
-                    survey: [1, 1, 1, 1, 1],
-                    score: 55
-                });
-                appData = appData;
-                console.log(appData);
-                refreshCharts();
-            }}>
-            Refresh
-        </button>
     </aside>
     <main class="flex-1 space-y-4 flex flex-col overflow-clip">
         <section
