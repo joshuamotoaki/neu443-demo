@@ -1,4 +1,9 @@
 <script lang="ts">
+    // Charts to display
+    // 1. Survey distribution for each group and overall
+    // 2. Score rankings
+    // 3.
+
     import { supabase } from "$lib/supabase";
     import { onMount } from "svelte";
 
@@ -25,7 +30,69 @@
         score: number;
     };
 
-    let appData: DataEntry[] = [];
+    // let appData: DataEntry[] = [];
+    let appData: DataEntry[] = [
+        {
+            group: "A",
+            answers: {
+                "1": ["purple", "green", "green", "green"],
+                "5": ["blue", "yellow", "blue", "yellow"],
+                "7": ["purple", "green", "blue", "yellow"]
+            },
+            survey: [1, 2, 3, 4, 5],
+            score: 10
+        },
+        {
+            group: "B",
+            answers: {
+                "1": ["purple", "green", "green", "green"],
+                "5": ["blue", "yellow", "blue", "yellow"],
+                "7": ["purple", "green", "blue", "yellow"]
+            },
+            survey: [1, 3, 3, 5, 1],
+            score: 20
+        },
+        {
+            group: "A",
+            answers: {
+                "1": ["purple", "green", "green", "green"],
+                "5": ["blue", "yellow", "blue", "yellow"],
+                "7": ["purple", "green", "blue", "yellow"]
+            },
+            survey: [1, 2, 3, 4, 5],
+            score: 10
+        },
+        {
+            group: "B",
+            answers: {
+                "1": ["purple", "green", "green", "green"],
+                "5": ["blue", "yellow", "blue", "yellow"],
+                "7": ["purple", "green", "blue", "yellow"]
+            },
+            survey: [1, 3, 3, 5, 1],
+            score: 20
+        },
+        {
+            group: "A",
+            answers: {
+                "1": ["purple", "green", "green", "green"],
+                "5": ["blue", "yellow", "blue", "yellow"],
+                "7": ["purple", "green", "blue", "yellow"]
+            },
+            survey: [1, 2, 3, 4, 5],
+            score: 10
+        },
+        {
+            group: "B",
+            answers: {
+                "1": ["purple", "green", "green", "green"],
+                "5": ["blue", "yellow", "blue", "yellow"],
+                "7": ["purple", "green", "blue", "yellow"]
+            },
+            survey: [1, 3, 3, 5, 1],
+            score: 20
+        }
+    ];
 
     supabase
         .channel("data")
@@ -43,27 +110,32 @@
         )
         .subscribe();
 
-    onMount(async () => {
-        const { data, error } = await supabase.from("data").select("*");
+    // onMount(async () => {
+    //     const { data, error } = await supabase.from("data").select("*");
 
-        if (error) {
-            console.error(error);
-        } else {
-            appData.push(...data.map(x => x.data));
-        }
-        appData = appData;
-    });
+    //     if (error) {
+    //         console.error(error);
+    //     } else {
+    //         appData.push(...data.map(x => x.data));
+    //     }
+    //     appData = appData;
+    // });
 
     $: console.log(appData);
+    $: sortedScores = appData.toSorted((a, b) => b.score - a.score);
 </script>
 
-<div>
-    {#each appData as entry}
-        <div>
-            <h2>{entry.group}</h2>
-            <p>Score: {entry.score}</p>
-            <p>Survey: {entry.survey.join(", ")}</p>
-            <p>Answers: {JSON.stringify(entry.answers)}</p>
-        </div>
-    {/each}
+<div class="h-screen w-screen flex p-2">
+    <aside class="rounded-md bg-green-100 shadow-lg p-2">
+        <h2 class="font-semibold">Leaderboard</h2>
+        <ul>
+            {#each sortedScores as { score, group }, i}
+                <li>
+                    <span>{i + 1}.</span>
+                    <span>{score} ({group})</span>
+                </li>
+            {/each}
+        </ul>
+    </aside>
+    <main class="flex-1"></main>
 </div>
