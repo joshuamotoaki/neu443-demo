@@ -1,38 +1,11 @@
-# create-svelte
+# NEU443 Demo
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+A little web demo for a class presentation in NEU443: Computational Psychiatry (Fall 2024 Princeton University) on _Eldar, E., & Niv, Y. (2015). Interaction between emotional state and learning underlies mood instability. Nature communications, 6(1), 1-10_. There are 3 parts (routes):
 
-## Creating a project
+-   The game (/) -- a modified version of the study conducted in the paper. Just for fun, not scientific.
+-   The stats page (/stats) -- a leaderboard of results and a few graphs based on the game results.
+-   The interactive model (/model) -- a graph of the RL model presented in the paper with configurable parameters.
 
-If you're seeing this, you've probably already done this step. Congrats!
+The graphs in the stats page update in realtime with Supabase. The app is not currently deployed, but if you want to try it out, create a Supabase project with 1 table with an id and a jsonb column called "data". Disable RLS and enable Realtime. Add the URL and Public Anon Key to [`supabase.ts`](./src/lib/supabase.ts).
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Built with Svelte/SvelteKit, TailwindCSS, DaisyUI, and Supabase.
