@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { SAMPLE_DATA } from "$lib/sample";
     // Charts to display
     // 1. Survey distribution for each group and overall
     // 2. Score rankings
@@ -8,13 +7,6 @@
     import { supabase } from "$lib/supabase";
     import Chart from "chart.js/auto";
     import { onMount } from "svelte";
-
-    const COLOR_THRESH_MAP: Record<string, number> = {
-        purple: 0.75, // Before
-        green: 0.25, // Before
-        blue: 0.25, // After
-        yellow: 0.75 // After
-    };
 
     type OptionsOne = "purple" | "green";
     type OptionsTwo = "blue" | "yellow";
@@ -33,7 +25,6 @@
     };
 
     let appData: DataEntry[] = [];
-    // let appData: DataEntry[] = SAMPLE_DATA as DataEntry[];
 
     supabase
         .channel("data")
