@@ -225,18 +225,18 @@
     </aside>
     <main class="flex-1 space-y-4 flex flex-col overflow-clip">
         <section
-            class="p-4 bg-white shadow-lg rounded-md flex-1 h-1/2
+            class="p-16 bg-white shadow-lg rounded-md flex-1 h-1/2
         flex flex-col items-center justify-center">
             <h2 class="text-center text-lg font-semibold">Survey Averages</h2>
-            <canvas bind:this={surveyAvgChart}></canvas>
+            <canvas class="flex-1" bind:this={surveyAvgChart}></canvas>
         </section>
         <section
-            class="p-4 bg-white shadow-lg rounded-md flex-1 h-1/2
+            class="p-16 bg-white shadow-lg rounded-md flex-1 h-1/2
         flex flex-col items-center justify-center">
             <h2 class="text-center text-lg font-semibold">
                 Pre-Spin Percentages
             </h2>
-            <canvas bind:this={beforePercentChart}></canvas>
+            <canvas class="flex-1" bind:this={beforePercentChart}></canvas>
         </section>
     </main>
 </div>
