@@ -157,7 +157,7 @@
     });
 </script>
 
-<div class="h-screen w-screen flex p-2 gap-2 bg-slate-50">
+<div class="h-screen w-screen flex p-4 gap-4 bg-slate-100">
     <aside class="rounded-md bg-white shadow-lg p-2">
         <h2 class="font-semibold text-lg">Leaderboard</h2>
         <ul>
@@ -169,27 +169,20 @@
             {/each}
         </ul>
     </aside>
-    <main class="flex-1 space-y-2">
-        <section class="p-2 bg-white shadow-lg rounded-md">
+    <main class="flex-1 space-y-4 flex flex-col overflow-clip">
+        <section
+            class="p-4 bg-white shadow-lg rounded-md flex-1 h-1/2
+        flex flex-col items-center justify-center">
             <h2 class="text-center text-lg font-semibold">Survey Averages</h2>
             <canvas bind:this={surveyAvgChart}></canvas>
         </section>
-        <section>{aGroupBeforePercent} {bGroupBeforePercent}</section>
-        <button
-            on:click={() => {
-                appData.push({
-                    group: "A",
-                    answers: {
-                        "1": ["purple", "green"],
-                        "5": ["blue", "yellow"],
-                        "7": ["purple", "yellow"]
-                    },
-                    survey: [1, 1, 1, 1, 1],
-                    score: 10
-                });
-                refreshCharts();
-            }}>
-            FEJ
-        </button>
+        <section
+            class="p-4 bg-white shadow-lg rounded-md flex-1 h-1/2
+        flex flex-col items-center justify-center">
+            <h2 class="text-center text-lg font-semibold">
+                Machine Preferences
+            </h2>
+            <!-- <canvas bind:this={surveyAvgChart}></canvas> -->
+        </section>
     </main>
 </div>
