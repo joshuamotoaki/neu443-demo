@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { SAMPLE_DATA } from "$lib/sample";
     // Charts to display
     // 1. Survey distribution for each group and overall
     // 2. Score rankings
@@ -31,68 +32,7 @@
     };
 
     // let appData: DataEntry[] = [];
-    let appData: DataEntry[] = [
-        {
-            group: "A",
-            answers: {
-                "1": ["purple", "green", "green", "green"],
-                "5": ["blue", "yellow", "blue", "yellow"],
-                "7": ["purple", "green", "blue", "yellow"]
-            },
-            survey: [1, 2, 3, 4, 5],
-            score: 10
-        },
-        {
-            group: "B",
-            answers: {
-                "1": ["purple", "green", "green", "green"],
-                "5": ["blue", "yellow", "blue", "yellow"],
-                "7": ["purple", "green", "blue", "yellow"]
-            },
-            survey: [1, 3, 3, 5, 1],
-            score: 20
-        },
-        {
-            group: "A",
-            answers: {
-                "1": ["purple", "green", "green", "green"],
-                "5": ["blue", "yellow", "blue", "yellow"],
-                "7": ["purple", "green", "blue", "yellow"]
-            },
-            survey: [1, 2, 3, 4, 5],
-            score: 10
-        },
-        {
-            group: "B",
-            answers: {
-                "1": ["purple", "green", "green", "green"],
-                "5": ["blue", "yellow", "blue", "yellow"],
-                "7": ["purple", "green", "blue", "yellow"]
-            },
-            survey: [1, 3, 3, 5, 1],
-            score: 20
-        },
-        {
-            group: "A",
-            answers: {
-                "1": ["purple", "green", "green", "green"],
-                "5": ["blue", "yellow", "blue", "yellow"],
-                "7": ["purple", "green", "blue", "yellow"]
-            },
-            survey: [1, 2, 3, 4, 5],
-            score: 10
-        },
-        {
-            group: "B",
-            answers: {
-                "1": ["purple", "green", "green", "green"],
-                "5": ["blue", "yellow", "blue", "yellow"],
-                "7": ["purple", "green", "blue", "yellow"]
-            },
-            survey: [1, 3, 3, 5, 1],
-            score: 20
-        }
-    ];
+    let appData: DataEntry[] = SAMPLE_DATA as DataEntry[];
 
     supabase
         .channel("data")
@@ -137,5 +77,8 @@
             {/each}
         </ul>
     </aside>
-    <main class="flex-1"></main>
+    <main class="flex-1">
+        <section></section>
+        <section></section>
+    </main>
 </div>
