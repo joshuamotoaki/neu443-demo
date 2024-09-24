@@ -30,6 +30,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource-variable/lexend": "^5.1.0",
-		"@supabase/supabase-js": "^2.45.4"
+		"@supabase/supabase-js": "^2.45.4",
+		"chart.js": "^4.4.4"
 	}
 }
