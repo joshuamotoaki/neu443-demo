@@ -3,16 +3,16 @@
     // Charts to display
     // 1. Survey distribution for each group and overall
     // 2. Score rankings
-    // 3.
+    // 3. Round 7 purple vs yellow and green vs blue
 
     import { supabase } from "$lib/supabase";
     import { onMount } from "svelte";
 
     const COLOR_THRESH_MAP: Record<string, number> = {
-        purple: 0.75,
-        green: 0.25,
-        blue: 0.25,
-        yellow: 0.75
+        purple: 0.75, // Before
+        green: 0.25, // Before
+        blue: 0.25, // After
+        yellow: 0.75 // After
     };
 
     type OptionsOne = "purple" | "green";
@@ -61,8 +61,43 @@
     //     appData = appData;
     // });
 
-    $: console.log(appData);
     $: sortedScores = appData.toSorted((a, b) => b.score - a.score);
+
+    const calcAvgArr = (group: "A" | "B"): number[] => {
+        return appData
+            .filter(x => x.group === group)
+            .map(x => x.survey)
+            .reduce((acc, curr) => {
+                return acc.map((x, i) => x + curr[i]);
+            }, Array(5).fill(0))
+            .map(x => x / appData.filter(x => x.group === group).length)
+            .map(x => parseFloat(x.toFixed(2)));
+    };
+
+    const calcPercentBefore = (group: "A" | "B"): number => {
+        const x: (OptionsOne | OptionsTwo)[] = appData
+            .filter(x => x.group === group)
+            .map(x => x.answers["7"])
+            .flat();
+
+        let preCount = 0;
+        let total = 0;
+
+        for (const ans of x) {
+            if (ans === "purple" || ans === "green") {
+                preCount++;
+            }
+            total++;
+        }
+
+        return parseFloat((preCount / total).toFixed(2));
+    };
+
+    let aGroupSurveyAvg: number[] = calcAvgArr("A");
+    let bGroupSurveyAvg: number[] = calcAvgArr("B");
+
+    let aGroupBeforePercent: number = calcPercentBefore("A");
+    let bGroupBeforePercent: number = calcPercentBefore("B");
 </script>
 
 <div class="h-screen w-screen flex p-2">
@@ -78,7 +113,7 @@
         </ul>
     </aside>
     <main class="flex-1">
-        <section></section>
-        <section></section>
+        <section>{aGroupSurveyAvg} {bGroupSurveyAvg}</section>
+        <section>{aGroupBeforePercent} {bGroupBeforePercent}</section>
     </main>
 </div>

@@ -25,9 +25,9 @@ export const SAMPLE_DATA = [
         answers: {
             "1": ["purple", "green", "green", "green"],
             "5": ["blue", "yellow", "blue", "yellow"],
-            "7": ["purple", "green", "blue", "yellow"]
+            "7": ["purple", "purple", "purple", "purple"]
         },
-        survey: [1, 2, 3, 4, 5],
+        survey: [1, 2, 3, 4, 4],
         score: 10
     },
     {
