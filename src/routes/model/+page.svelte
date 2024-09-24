@@ -2,21 +2,47 @@
     import Chart from "chart.js/auto";
     import { onMount } from "svelte";
 
-    let n = 100;
-    let f = 1;
+    let n = 250;
+    let f = 1.2;
     let eta_h = 0.1;
     let eta_v = 0.1;
     let reward = 10;
 
-    let aData = Array.from({ length: n }, () => Math.random() * 100);
-    let bData = Array.from({ length: n }, () => Math.random() * 100);
+    let mood: number[] = [];
+    let expectedValue: number[] = [];
+    let predictionError: number[] = [];
+    let perceivedReward: number[] = [];
+
+    const createCharts = () => {
+        const rArr = Array(n).fill(reward);
+        const rP = Array(n).fill(0);
+        const h = Array(n + 1).fill(0);
+        const v = Array(n + 1).fill(0);
+        const pe = Array(n).fill(0);
+        const m = Array(n + 1).fill(0);
+
+        for (let i = 0; i < n; i++) {
+            rP[i] = rArr[i] * Math.pow(f, m[i]);
+            pe[i] = rP[i] - v[i];
+            h[i + 1] = h[i] + eta_h * (pe[i] - h[i]);
+            m[i + 1] = Math.tanh(h[i]);
+            v[i + 1] = v[i] + eta_v * pe[i];
+        }
+
+        mood = m;
+        expectedValue = v;
+        predictionError = pe;
+        perceivedReward = rP;
+    };
+
+    createCharts();
 
     let graphData = {
         labels: Array.from({ length: n }, (_, i) => i),
         datasets: [
             {
-                label: "A",
-                data: aData,
+                label: "Mood",
+                data: mood,
                 borderColor: "red",
                 fill: false,
                 borderWidth: 2,
@@ -24,9 +50,27 @@
                 tension: 0.5
             },
             {
-                label: "B",
-                data: bData,
+                label: "Expected Value",
+                data: expectedValue,
                 borderColor: "blue",
+                fill: false,
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.5
+            },
+            {
+                label: "Prediction Error",
+                data: predictionError,
+                borderColor: "green",
+                fill: false,
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.5
+            },
+            {
+                label: "Perceived Reward",
+                data: perceivedReward,
+                borderColor: "purple",
                 fill: false,
                 borderWidth: 2,
                 pointRadius: 0,
@@ -71,11 +115,12 @@
         }
 
         // Create a new chart
-        aData = Array.from({ length: n }, () => Math.random() * 100);
-        bData = Array.from({ length: n }, () => Math.random() * 100);
+        createCharts();
 
-        config.data.datasets[0].data = aData;
-        config.data.datasets[1].data = bData;
+        graphData.datasets[0].data = mood;
+        graphData.datasets[1].data = expectedValue;
+        graphData.datasets[2].data = predictionError;
+        graphData.datasets[3].data = perceivedReward;
 
         graphData.labels = Array.from({ length: n }, (_, i) => i);
 
@@ -98,7 +143,7 @@
                     id="trials"
                     type="range"
                     min="0"
-                    max="500"
+                    max="2000"
                     step="10"
                     bind:value={n}
                     on:input={() => {
@@ -106,7 +151,7 @@
                     }}
                     class="range" />
 
-                <span>500</span>
+                <span>1000</span>
             </div>
         </div>
         <div class="space-y-1">
@@ -169,11 +214,11 @@
         <div class="space-y-1">
             <label for="reward">Reward ({reward})</label>
             <div class="slider">
-                <span>-100</span>
+                <span>0</span>
                 <input
                     id="reward"
                     type="range"
-                    min="-100"
+                    min="0"
                     max="100"
                     step="5"
                     bind:value={reward}
