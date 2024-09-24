@@ -128,6 +128,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>Interactive Model</title>
+</svelte:head>
+
 <div class="mx-auto w-11/12 max-w-5xl py-4">
     <h1 class="text-center text-3xl">Interactive Model</h1>
     <div class="w-full flex justify-center">
