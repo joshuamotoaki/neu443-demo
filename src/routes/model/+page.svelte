@@ -14,13 +14,19 @@
                 label: "A",
                 data: aData,
                 borderColor: "red",
-                fill: false
+                fill: false,
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.8
             },
             {
                 label: "B",
                 data: bData,
                 borderColor: "blue",
-                fill: false
+                fill: false,
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.8
             }
         ]
     };
@@ -39,7 +45,7 @@
                 },
                 title: {
                     display: true,
-                    text: "Chart.js Line Chart"
+                    text: "RL Model (Eldar & Niv 2015)"
                 }
             }
         }
@@ -67,13 +73,16 @@
     }
 </script>
 
-<canvas bind:this={graphCanvas} id="myGraph"></canvas>
+<div class="mx-auto w-11/12 pt-4">
+    <h1 class="text-center text-3xl">Interactive Model</h1>
+    <canvas bind:this={graphCanvas} id="myGraph"></canvas>
 
-<button
-    on:click={() => {
-        aData = Array.from({ length: n }, () => Math.random() * 100);
-        bData = Array.from({ length: n }, () => Math.random() * 100);
-        updateChart();
-    }}>
-    Click
-</button>
+    <button
+        on:click={() => {
+            aData = Array.from({ length: n }, () => Math.random() * 100);
+            bData = Array.from({ length: n }, () => Math.random() * 100);
+            updateChart();
+        }}>
+        Click
+    </button>
+</div>
