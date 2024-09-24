@@ -121,14 +121,46 @@
         }
     };
 
+    let beforePrecentData = {
+        labels: ["Group A", "Group B"],
+        datasets: [
+            {
+                label: "All Groups",
+                data: [aGroupBeforePercent, bGroupBeforePercent],
+                backgroundColor: [
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(255, 99, 132, 0.2)"
+                ]
+            }
+        ]
+    };
+
+    let beforePercentConfig: any = {
+        type: "bar",
+        data: beforePrecentData,
+        options: {
+            labels: {
+                display: false
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
     let surveyAvgChart: HTMLCanvasElement;
+    let beforePercentChart: HTMLCanvasElement;
 
     let ctx1: any;
     let chart1: any;
 
+    let ctx2: any;
+    let chart2: any;
+
     const refreshCharts = () => {
         // Refresh data
-
         aGroupSurveyAvg = calcAvgArr("A");
         bGroupSurveyAvg = calcAvgArr("B");
 
@@ -137,9 +169,13 @@
 
         // Recreate charts
         if (chart1) chart1.destroy();
+        if (chart2) chart2.destroy();
 
         ctx1 = surveyAvgChart.getContext("2d");
         chart1 = new Chart(ctx1, surveyAvgConfig);
+
+        ctx2 = beforePercentChart.getContext("2d");
+        chart2 = new Chart(ctx2, beforePercentConfig);
     };
 
     onMount(async () => {
@@ -154,6 +190,9 @@
 
         ctx1 = surveyAvgChart.getContext("2d");
         chart1 = new Chart(ctx1, surveyAvgConfig);
+
+        ctx2 = beforePercentChart.getContext("2d");
+        chart2 = new Chart(ctx2, beforePercentConfig);
     });
 </script>
 
@@ -180,9 +219,9 @@
             class="p-4 bg-white shadow-lg rounded-md flex-1 h-1/2
         flex flex-col items-center justify-center">
             <h2 class="text-center text-lg font-semibold">
-                Machine Preferences
+                Pre-Spin Percentages
             </h2>
-            <!-- <canvas bind:this={surveyAvgChart}></canvas> -->
+            <canvas bind:this={beforePercentChart}></canvas>
         </section>
     </main>
 </div>
