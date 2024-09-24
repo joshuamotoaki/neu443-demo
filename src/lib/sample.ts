@@ -59,5 +59,15 @@ export const SAMPLE_DATA = [
         },
         survey: [1, 3, 3, 5, 1],
         score: 20
+    },
+    {
+        group: "B",
+        answers: {
+            "1": ["purple", "green", "green", "green"],
+            "5": ["blue", "yellow", "blue", "yellow"],
+            "7": ["purple", "green", "blue", "yellow"]
+        },
+        survey: [1, 1, 1, 1, 1],
+        score: 55
     }
 ];

@@ -47,6 +47,7 @@
             payload => {
                 appData.push(payload.new.data);
                 appData = appData;
+                refreshCharts();
             }
         )
         .subscribe();
@@ -113,6 +114,9 @@
         type: "bar",
         data: surveyAvgData,
         options: {
+            animation: {
+                duration: 0
+            },
             scales: {
                 y: {
                     beginAtZero: true
@@ -139,6 +143,9 @@
         type: "bar",
         data: beforePrecentData,
         options: {
+            animation: {
+                duration: 0
+            },
             labels: {
                 display: false
             },
@@ -166,6 +173,14 @@
 
         aGroupBeforePercent = calcPercentBefore("A");
         bGroupBeforePercent = calcPercentBefore("B");
+
+        surveyAvgData.datasets[0].data = aGroupSurveyAvg;
+        surveyAvgData.datasets[1].data = bGroupSurveyAvg;
+
+        beforePrecentData.datasets[0].data = [
+            aGroupBeforePercent,
+            bGroupBeforePercent
+        ];
 
         // Recreate charts
         if (chart1) chart1.destroy();
@@ -207,6 +222,25 @@
                 </li>
             {/each}
         </ul>
+        <button
+            class="bg-blue-500 text-white p-2 rounded-md mt-2"
+            on:click={() => {
+                appData.push({
+                    group: "B",
+                    answers: {
+                        "1": ["purple", "green", "green", "green"],
+                        "5": ["blue", "yellow", "blue", "yellow"],
+                        "7": ["purple", "green", "blue", "yellow"]
+                    },
+                    survey: [1, 1, 1, 1, 1],
+                    score: 55
+                });
+                appData = appData;
+                console.log(appData);
+                refreshCharts();
+            }}>
+            Refresh
+        </button>
     </aside>
     <main class="flex-1 space-y-4 flex flex-col overflow-clip">
         <section
