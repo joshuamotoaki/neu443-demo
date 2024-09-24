@@ -2,9 +2,25 @@
     import { supabase } from "$lib/supabase";
     import { onMount } from "svelte";
 
+    const COLOR_THRESH_MAP: Record<string, number> = {
+        purple: 0.75,
+        green: 0.25,
+        blue: 0.25,
+        yellow: 0.75
+    };
+
+    type OptionsOne = "purple" | "green";
+    type OptionsTwo = "blue" | "yellow";
+
+    type AnswerSheet = {
+        "1": OptionsOne[];
+        "5": OptionsTwo[];
+        "7": (OptionsOne | OptionsTwo)[];
+    };
+
     type DataEntry = {
         group: "A" | "B";
-        answers: Record<number, string[]>;
+        answers: AnswerSheet;
         survey: number[];
         score: number;
     };
